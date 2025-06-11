@@ -1,0 +1,161 @@
+/* admin menu */
+
+  
+  .site-wrap {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    
+  }
+  
+  .site-nav {
+    background: #0b121b;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-left: px;
+  
+    a {
+      color: inherit;
+    }
+  
+    ul {
+      margin-bottom: auto;
+      
+      li {
+        a {
+          display: block;
+          padding: 0.75rem 0.5rem 0.75rem 2rem;
+          position: relative;
+          text-decoration: none;
+          &:hover,
+          &:focus {
+            color: #1bcc1b;
+            text-decoration: none;
+          }
+        }
+
+        
+        
+      }
+      ul {
+        padding-left: 1rem;
+        margin-bottom: 0.5rem;
+        a {
+          padding-top: 0.4rem;
+          padding-bottom: 0.4rem;
+        }
+        &.active > a {
+            background: linear-gradient(to right, #1f365b, transparent);
+            
+          }
+      }
+    }
+  }
+  
+  .note {
+    width: calc(100% - 6rem);
+    margin: 2rem;
+    background: #171c26;
+    border-radius: 10px;
+    padding: 1rem;
+    h3 {
+      font-size: 0.9rem;
+      margin: 0 0 0.4rem 0;
+    }
+    p {
+      color: #717783;
+    }
+  }
+  
+  .name {
+    font-size: 1.3rem;
+    position: relative;
+    margin: 2rem 0 2rem 0;
+    padding: 0 2.5rem 0.5rem 2rem;
+    width: calc(100% - 3rem);
+ 
+  
+  }
+  
+  .name2 {
+    font-size: 1.1rem;
+    position: relative;
+    margin: 2rem 0 2rem 0;
+    padding: 0 2.5rem 0.5rem 2rem;
+    width: calc(100% - 3rem);
+    background: linear-gradient(to right, #2d2c61, transparent);
+  }
+  
+  .site-navuser {
+    background: #fc8005;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-left: px;
+  
+    a {
+      color: inherit;
+    }
+  
+    ul {
+      margin-bottom: auto;
+      
+      li {
+        a {
+          display: block;
+          padding: 0.75rem 0.5rem 0.75rem 2rem;
+          position: relative;
+          text-decoration: none;
+          &:hover,
+          &:focus {
+            color: #8607f6;
+            text-decoration: none;
+          }
+        }
+
+        
+        
+      }
+      ul {
+        padding-left: 1rem;
+        margin-bottom: 0.5rem;
+        a {
+          padding-top: 0.4rem;
+          padding-bottom: 0.4rem;
+        }
+        &.active > a {
+            background: linear-gradient(to right, #1f365b, transparent);
+            
+          }
+      }
+    }
+  }
+
+  .name2user {
+    font-size: 1.1rem;
+    position: relative;
+    margin: 2rem 0 2rem 0;
+    padding: 0 2.5rem 0.5rem 2rem;
+    width: calc(100% - 3rem);
+    background: linear-gradient(to right, #fc6900, transparent);
+  }
+
+  
+  .noteuser {
+    width: calc(100% - 6rem);
+    margin: 2rem;
+    background: #faaf71;
+    border-radius: 10px;
+    padding: 1rem;
+    h3 {
+      font-size: 0.9rem;
+      margin: 0 0 0.4rem 0;
+    }
+    p {
+      color: #e1f8f7;
+    }
+  }
