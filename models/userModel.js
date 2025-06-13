@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true, // Consider if phone/address are truly required for Google users
+        required: false, 
     },
     address: {
         type: String,
-        required: true, // Consider if phone/address are truly required for Google users
+        required: false, 
     },
     answer:{
         type: String,
