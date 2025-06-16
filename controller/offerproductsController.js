@@ -38,7 +38,7 @@ export const getOfferProducts = async (req, res) => {
       .populate({
         path: "product",
         populate: {
-          path: "category", // this works only if `product.category` is populated
+          path: "category", 
           model: "Category"
         }
       });
@@ -48,7 +48,7 @@ export const getOfferProducts = async (req, res) => {
       offerProducts
     });
   } catch (error) {
-    console.error("❌ Error fetching offer products:", error);
+    console.error(" Error fetching offer products:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch offer products"

@@ -2,13 +2,13 @@ import userModel from "../models/userModel.js";
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import JWT from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
-import crypto from 'crypto'; // Import crypto for secure random string generation
+import crypto from 'crypto';
 
 export const registerController = async (req , res)=>{
     try {
         const {name , email , password , phone , address , answer} = req.body
 
-        // Validation
+       
         if(!name){
             return res.status(400).send({ success: false, message:'Name is required'})
         }
@@ -31,8 +31,8 @@ export const registerController = async (req , res)=>{
         // Check if user already exists
         const existinguser = await userModel.findOne({email})
         if(existinguser){
-            return res.status(409).send({ // 409 Conflict for existing resource
-                success: false, // Changed to false as it's not a new successful registration
+            return res.status(409).send({ 
+                success: false, 
                 message:'User already registered. Please login.'
             })
         }
@@ -46,15 +46,15 @@ export const registerController = async (req , res)=>{
             address,
             password: hashedPassword,
             answer,
-            isGoogleUser: false // Explicitly set for traditional registration
+            isGoogleUser: false 
         });
 
-        await user.save(); // <-- Moved this here, before sending response
+        await user.save(); 
 
-        res.status(201).send({ // 201 Created for successful resource creation
+        res.status(201).send({ 
             success: true,
             message:'User registered successfully',
-            user: { // Exclude sensitive info from response
+            user: { 
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -71,7 +71,7 @@ export const registerController = async (req , res)=>{
         res.status(500).send({
             success :false ,
             message:'Error in registration',
-            error: error.message // Send error message for debugging if needed, or a generic one
+            error: error.message 
         })
     }
 }
@@ -81,9 +81,9 @@ export const loginController = async (req , res)=>{
     try {
         const {email , password} = req.body
 
-        // Validation
+        
         if(!email || !password){
-            return res.status(400).send({ // 400 Bad Request
+            return res.status(400).send({ 
                 success:false ,
                 message:'Invalid email or password'
             })
@@ -92,7 +92,7 @@ export const loginController = async (req , res)=>{
         // Check user
         const user = await userModel.findOne({email})
         if(!user){
-            return res.status(404).send({ // 404 Not Found
+            return res.status(404).send({ 
                 success:false ,
                 message:'Email not registered'
             })
@@ -109,7 +109,7 @@ export const loginController = async (req , res)=>{
         // Decryption and password match
         const match = await comparePassword(password , user.password)
         if(!match){
-            return res.status(401).send({ // 401 Unauthorized
+            return res.status(401).send({ 
                 success:false ,
                 message:'Invalid password'
             })
@@ -121,7 +121,7 @@ export const loginController = async (req , res)=>{
         res.status(200).send({
             success:true ,
             message:"Login successful" ,
-            user: { // Exclude sensitive info from response
+            user: { 
                 _id: user._id,
                 name:user.name ,
                 email:user.email ,
@@ -164,7 +164,7 @@ export const forgotPasswordController = async (req , res)=>{
 
         //validation
         if(!user){
-            return res.status(404).send({ // 404 Not Found
+            return res.status(404).send({
                 success:false ,
                 message:"Wrong email or answer"
             })
@@ -179,7 +179,7 @@ export const forgotPasswordController = async (req , res)=>{
 
     } catch (error) {
         console.log(error)
-        res.status(500).send({ // Corrected typo: ststus -> status
+        res.status(500).send({ 
             success:false ,
             message:"Something went wrong" ,
             error: error.message
@@ -196,7 +196,7 @@ export const testController = (req , res)=>{
 // Controller to get all users
 export const getAllUsersController = async (req, res) => {
     try {
-        const users = await userModel.find({}).select("-password -answer"); // Exclude password and answer
+        const users = await userModel.find({}).select("-password -answer"); 
         res.status(200).json({
             success: true,
             users,
@@ -227,7 +227,7 @@ export const updateUserRoleController = async (req, res) => {
         const user = await userModel.findByIdAndUpdate(
             id,
             { role },
-            { new: true, select: "-password -answer" } // Exclude sensitive fields
+            { new: true, select: "-password -answer" } 
         );
 
         if (!user) {
@@ -256,7 +256,7 @@ export const toggleBlockStatusController = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Find the user
+       
         const user = await userModel.findById(id);
 
         if (!user) {
@@ -273,7 +273,7 @@ export const toggleBlockStatusController = async (req, res) => {
         res.status(200).json({
             success: true,
             message: `User has been ${user.blocked ? "blocked" : "unblocked"}`,
-            user: { // Return updated user without sensitive info
+            user: { 
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -324,7 +324,7 @@ export const deleteUserController = async (req, res) => {
 export const getUserDetailsController = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await userModel.findById(id).select("-password -answer"); // Exclude sensitive info
+        const user = await userModel.findById(id).select("-password -answer"); 
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -371,11 +371,11 @@ export const googleLoginController = async (req, res) => {
                 name,
                 email,
                 googleId,
-                password: hashedPassword, // Store a securely hashed random string
-                phone: "", // Set as empty or a default string, consider if truly required by schema
-                address: "", // Set as empty or a default string, consider if truly required by schema
-                answer: "", // Set as empty or a default string, consider if truly required by schema
-                isGoogleUser: true // Mark as Google-authenticated user
+                password: hashedPassword, 
+                phone: "", 
+                address: "", 
+                answer: "", 
+                isGoogleUser: true 
             }).save();
         } else {
             // User exists, but might not have googleId (e.g., if they first registered with email)
@@ -423,7 +423,7 @@ export const googleLoginController = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { name, phone, address } = req.body;
-        // req.user._id is populated by requireSignIn middleware
+       
         const user = await userModel.findById(req.user._id);
 
         if (!user) {
@@ -440,7 +440,7 @@ export const updateProfile = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Profile updated successfully',
-            user: { // Exclude sensitive info from response
+            user: { 
                 _id: user._id,
                 name: user.name,
                 email: user.email,

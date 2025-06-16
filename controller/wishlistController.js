@@ -1,23 +1,20 @@
 import Wishlist from '../models/Wishlist.js';
 import ProductModel from '../models/ProductModel.js';
 
-// Helper function to handle async operations and send errors
-// This can also be in a separate utility file and imported if you use it frequently
+
 const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-// @desc    Get user wishlist
-// @route   GET /api/v1/wishlist
-// @access  Private (requires user authentication)
+
 export const getWishlist = asyncHandler(async (req, res, next) => {
-  // Assuming req.user._id is available from your authentication middleware
+  
   const wishlist = await Wishlist.findOne({ user: req.user._id }).populate('products');
 
   if (!wishlist) {
     return res.status(200).json({
       success: true,
-      wishlist: { products: [] }, // Return an empty wishlist if none exists for the user
+      wishlist: { products: [] }, 
     });
   }
 
@@ -27,9 +24,7 @@ export const getWishlist = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc    Add product to wishlist
-// @route   POST /api/v1/wishlist
-// @access  Private
+
 export const addProductToWishlist = asyncHandler(async (req, res, next) => {
   const { productId } = req.body;
 
@@ -66,9 +61,7 @@ export const addProductToWishlist = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc    Remove product from wishlist
-// @route   DELETE /api/v1/wishlist/:productId
-// @access  Private
+
 export const removeProductFromWishlist = asyncHandler(async (req, res, next) => {
   const { productId } = req.params;
 
@@ -82,12 +75,11 @@ export const removeProductFromWishlist = asyncHandler(async (req, res, next) => 
   // 2. Filter out the product to be removed
   const initialLength = wishlist.products.length;
   wishlist.products = wishlist.products.filter(
-    (id) => id.toString() !== productId.toString() // Ensure comparison is robust for ObjectId
+    (id) => id.toString() !== productId.toString() 
   );
 
   // 3. Check if any product was actually removed
   if (wishlist.products.length === initialLength) {
-    // This means the productId was not found in the wishlist
     return res.status(404).json({ success: false, message: 'Product not found in wishlist' });
   }
 

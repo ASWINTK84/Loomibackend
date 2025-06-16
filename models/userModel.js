@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        // Password is not required if the user is a Google user
+        
         required: function() {
             return !this.isGoogleUser;
         },
@@ -27,26 +27,26 @@ const userSchema = new mongoose.Schema({
     },
     answer:{
         type: String,
-        // Answer is not required if the user is a Google user
+        
         required: function() {
             return !this.isGoogleUser;
         },
     },
     role: {
         type: Number,
-        enum: [0, 1], // Restrict role to 0 (user) or 1 (admin)
+        enum: [0, 1], 
         default: 0,
     },
     blocked: {
         type: Boolean,
         default: false,
     },
-    googleId: { // New field to store Google user ID
+    googleId: { 
         type: String,
         unique: true,
-        sparse: true, // Allows null values, so unique constraint only applies to non-null values
+        sparse: true, 
     },
-    isGoogleUser: { // New flag to identify users signed up via Google
+    isGoogleUser: { 
         type: Boolean,
         default: false,
     },

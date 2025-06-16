@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import Cart from "../models/Cart.js";
-import ProductModel from "../models/ProductModel.js"; // Make sure this path is correct
-import OfferProduct from "../models/offerproductsModel.js"; // Make sure this path is correct
+import ProductModel from "../models/ProductModel.js"; 
+import OfferProduct from "../models/offerproductsModel.js"; 
 
-// --- Helper: Populate cart details with offer-aware pricing ---
+
 const populateCartDetails = async (cart) => {
   if (!cart || !cart.items || cart.items.length === 0) {
     return { items: [], total: 0 };
@@ -25,7 +25,7 @@ const populateCartDetails = async (cart) => {
   try {
     await cart.populate({
       path: "items.product",
-      // Add 'colors' to the select statement if you want to display all available colors on the cart page
+      
       select: "name price imageUrl sizes colors", 
     });
   } catch (populateError) {
@@ -68,12 +68,12 @@ const populateCartDetails = async (cart) => {
         offerPrice,
         appliedOfferPercentage: offerPercentage,
         sizes: item.product.sizes,
-        // Include colors in the returned product details if needed for display
+       
         colors: item.product.colors, 
       },
       quantity: item.quantity,
       size: item.size,
-      color: item.color, // Include the color here
+      color: item.color, 
       subTotal: parseFloat(subTotal.toFixed(2)),
     };
   }).filter(Boolean);
@@ -140,7 +140,7 @@ export const addToCart = async (req, res) => {
 // --- Get Cart ---
 export const getCart = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user ID is from authentication middleware
+    const userId = req.user._id; 
     const cart = await Cart.findOne({ user: userId });
 
     // Populate cart details even if cart is null (will return empty items/total)
@@ -155,8 +155,8 @@ export const getCart = async (req, res) => {
 // --- Remove from Cart ---
 export const removeFromCart = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user ID
-    const cartItemId = req.params.cartItemId; // ID of the specific item in the cart's items array
+    const userId = req.user._id; 
+    const cartItemId = req.params.cartItemId; 
 
     if (!mongoose.Types.ObjectId.isValid(cartItemId)) {
       return res.status(400).json({ success: false, message: "Invalid cart item ID." });
@@ -185,8 +185,8 @@ export const removeFromCart = async (req, res) => {
 // --- Update Quantity ---
 export const updateCartQuantity = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user ID
-    const cartItemId = req.params.cartItemId; // ID of the specific item in the cart's items array
+    const userId = req.user._id; 
+    const cartItemId = req.params.cartItemId; 
     const { quantity } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(cartItemId)) {
@@ -216,7 +216,7 @@ export const updateCartQuantity = async (req, res) => {
       cart.items[itemIndex].quantity = quantity;
     }
 
-    await cart.save(); // Save the updated cart
+    await cart.save(); 
 
     // Populate and send back the updated cart details
     const { items, total } = await populateCartDetails(cart);
@@ -230,17 +230,17 @@ export const updateCartQuantity = async (req, res) => {
 // --- Clear Cart ---
 export const clearCart = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user ID
+    const userId = req.user._id; 
 
     // Find the cart and set its items array to empty
     const cart = await Cart.findOneAndUpdate(
       { user: userId },
       { $set: { items: [] } },
-      { new: true } // Return the updated document
+      { new: true } 
     );
 
     if (!cart) {
-      // If cart doesn't exist, it's already "cleared" for this user
+      
       return res.status(200).json({ success: true, message: "Cart already empty.", items: [], total: 0 });
     }
 

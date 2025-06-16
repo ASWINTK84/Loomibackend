@@ -4,14 +4,14 @@ const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
   items: [
     {
-      product: Object, // Or { type: mongoose.Schema.Types.ObjectId, ref: "Product" }
-      quantity: { type: Number, required: true, min: 1 }, // Added validation
-      color: { type: String }, // Added colour
-      size: { type: String },   // Added size
+      product: Object, 
+      quantity: { type: Number, required: true, min: 1 }, 
+      color: { type: String }, 
+      size: { type: String },  
     },
   ],
   totalAmount: { type: Number, required: true },
-  offerPrice: Number, // Optional, can be undefined if no offer
+  offerPrice: Number, 
   shippingAddress: {
     name: { type: String, required: true },
     phone: { type: String, required: true },

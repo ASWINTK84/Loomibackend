@@ -22,7 +22,7 @@ export const createRazorpayOrder = async (req, res) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const userId = req.user._id;  // <-- get user from middleware
+    const userId = req.user._id;  
 
     const { items, totalAmount, offerPrice, shippingAddress, paymentMethod, paymentInfo } = req.body;
 
@@ -64,8 +64,8 @@ export const getUserOrders = async (req, res) => {
     const userId = req.user._id;
 
     const orders = await Order.find({ user: userId })
-      .sort({ createdAt: -1 })  // latest orders first
-      .populate("items.product", "name price image"); // populate product info
+      .sort({ createdAt: -1 }) 
+      .populate("items.product", "name price image"); 
 
     res.status(200).json({ success: true, orders });
   } catch (err) {

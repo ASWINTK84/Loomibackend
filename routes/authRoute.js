@@ -2,18 +2,17 @@ import express from 'express'
 import { registerController ,loginController, testController, forgotPasswordController, getAllUsersController, updateUserRoleController, toggleBlockStatusController, deleteUserController, getUserDetailsController, googleLoginController, updateProfile } from "../controller/authController.js";
 import { isAdmin, requireSignIn } from '../middlewares/authMiddleware.js';
 
-//router object
+
 const router = express.Router();
 
 
 
-// routing 
-// Register || method is post
+
 
 router.post('/register', registerController)
 
 
-// LOGIN || //POST method
+
 
 router.post('/login', loginController)
 

@@ -37,12 +37,12 @@ const productSchema = new mongoose.Schema({
     },
   colors: {
     type: [String],
-    enum: ['red', 'green', 'white', 'black', 'blue'], // only 5 colors allowed
+    enum: ['red', 'green', 'white', 'black', 'blue'], 
     default: []
   },
   sizes: {
     type: [String],
-    enum: ['s', 'm', 'l', 'xl', 'xxl'], // only 5 sizes allowed
+    enum: ['s', 'm', 'l', 'xl', 'xxl'], 
     default: []
   },
 }, {timestamps:true }  )

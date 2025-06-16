@@ -15,7 +15,7 @@ import adminOrderRoutes from './routes/adminOrderRoutes.js'
 import contactRoutes from './routes/contactRoutes.js';
 
 
-// //env configure
+
 dotenv.config() ;
 
 
@@ -45,6 +45,7 @@ app.use('/api/contact', contactRoutes);
 
 
 //rest api
+
 app.get('/' , (req , res)=>{
     console.log("GET / route hit");
     res.send("welcome ")

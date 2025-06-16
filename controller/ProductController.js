@@ -52,7 +52,7 @@ export const createProductController = async (req, res) => {
       category,
       colors,
       sizes,
-      imageUrl, // optional Cloudinary image URL
+      imageUrl, 
     });
 
     await product.save();
@@ -76,7 +76,7 @@ export const createProductController = async (req, res) => {
 export const getProductController = async (req, res) => {
   try {
     const products = await ProductModel.find({})
-      //.populate("category") // uncomment if category is a ref
+      
       .select("-photo")
       .sort({ createdAt: -1 });
 
@@ -102,7 +102,7 @@ export const getSingleProductBySlugController = async (req, res) => {
     const { slug } = req.params;
 
     const product = await ProductModel.findOne({ slug })
-      //.populate("category")
+      
       .select("-photo");
 
     if (!product) {
@@ -165,7 +165,7 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
-// UPDATE PRODUCT (Supports Partial Updates)
+
 
 
 
@@ -190,10 +190,10 @@ export const getProductsByCategoryController = async (req, res) => {
 export const productFiltersController = async (req, res) => {
   try {
     const {
-      checked = [], // array of category IDs
-      radio = [], // price range [min, max]
-      sizes = [], // selected sizes
-      colors = [], // selected colors
+      checked = [], 
+      radio = [], 
+      sizes = [], 
+      colors = [], 
       page = 1,
       limit = 12,
     } = req.body;
